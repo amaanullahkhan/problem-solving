@@ -76,3 +76,24 @@ func getReversedWords(string: String) -> String {
 getReversedWords(string: "My name is amaan")
 
 
+// Sort Dates
+func sortDates(dates: [String]) -> [String] {
+    
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd MMM yyyy"
+    
+    let actualDates = dates.map { (date) -> Date in
+        return formatter.date(from: date)!
+    }
+    
+    let sortedDates = actualDates.sorted()
+    return sortedDates.map({ (date) -> String in
+        return formatter.string(from: date)
+    })
+    
+}
+
+let dates = ["3 Mar 2017", "1 Feb 2017", "1 Jan 1997"]
+let sortedDates = sortDates(dates: dates)
+
+
