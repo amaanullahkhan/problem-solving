@@ -27,7 +27,7 @@ func reconcileHelper(_ a: [Int], _ b: [Int]) -> String {
     return "Numbers in array a that aren't in array b:\n\(aUniqueSorted)\n\nNumbers in array b that aren't in array a:\n\(bUniqueSorted)\n"
 }
 
-extension RandomAccessCollection where Element : Comparable {
+extension Array where Element : Comparable {
     func insertionIndex(of value: Element) -> Index {
         var slice : SubSequence = self[...]
 
