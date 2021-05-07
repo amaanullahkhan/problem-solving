@@ -11,34 +11,41 @@ func mergeSort(array: [Int]) -> [Int] {
 }
 
 func merge(left: [Int], right: [Int]) -> [Int] {
-    
+
     var result: [Int] = []
     result.reserveCapacity(left.count + right.count)
-    
+
     var leftIndex = 0
     var rightIndex = 0
-    
-    while leftIndex < left.count && rightIndex < left.count {
+
+    while leftIndex < left.count && rightIndex < right.count {
         if left[leftIndex] < right[rightIndex] {
             result.append(left[leftIndex])
             leftIndex += 1
+        } else if left[leftIndex] > right[rightIndex] {
+            result.append(right[rightIndex])
+            rightIndex += 1
         } else {
+            result.append(left[leftIndex])
+            leftIndex += 1
             result.append(right[rightIndex])
             rightIndex += 1
         }
     }
-    
+
     while leftIndex < left.count {
         result.append(left[leftIndex])
         leftIndex += 1
     }
-    
+
     while rightIndex < right.count {
         result.append(right[rightIndex])
         rightIndex += 1
     }
-    
+
     return result
 }
 
-mergeSort(array: [2,2,2,1,5,4,9])
+//mergeSort(array: [2,4,1])
+mergeSort(array: [2,1,3,1,2])
+
