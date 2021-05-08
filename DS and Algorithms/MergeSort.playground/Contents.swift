@@ -19,15 +19,10 @@ func merge(left: [Int], right: [Int]) -> [Int] {
     var rightIndex = 0
 
     while leftIndex < left.count && rightIndex < right.count {
-        if left[leftIndex] < right[rightIndex] {
+        if left[leftIndex] <= right[rightIndex] {
             result.append(left[leftIndex])
             leftIndex += 1
-        } else if left[leftIndex] > right[rightIndex] {
-            result.append(right[rightIndex])
-            rightIndex += 1
         } else {
-            result.append(left[leftIndex])
-            leftIndex += 1
             result.append(right[rightIndex])
             rightIndex += 1
         }
@@ -46,6 +41,6 @@ func merge(left: [Int], right: [Int]) -> [Int] {
     return result
 }
 
-//mergeSort(array: [2,4,1])
+mergeSort(array: [2,4,1])
 mergeSort(array: [2,1,3,1,2])
 
