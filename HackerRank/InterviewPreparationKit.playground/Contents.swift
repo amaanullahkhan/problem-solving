@@ -305,34 +305,18 @@ func sherlockAndAnagrams(s: String) -> Int {
 // 1 3 9 9 27 81
 // Complete the countTriplets function below.
 func countTriplets(arr: [Int], r: Int) -> Int {
-    
-    var triplets = 0
-    var dict: [Int: [Int]] = [:]
-    
-    arr.enumerated().forEach { (index, element) in
-        var indexes: [Int] = dict[element] ?? []
-        indexes.append(index)
-        dict[element] = indexes
+    var third: [Int: Int] = [:]
+    var second: [Int: Int] = [:]
+    var count = 0
+    for num in arr {
+        count += third[num, default: 0]
+        third[num*r] = third[num*r, default: 0] + second[num, default: 0]
+        second[num*r] = second[num*r, default: 0] + 1
     }
-    
-    arr.enumerated().forEach { (i, element) in
-        let secondMultiple = element * r
-        guard
-            let secondMultipleIndexes = dict[secondMultiple] else { return }
-        let thirdMultiple = secondMultiple * r
-        guard
-            let thirdMultipleIndexes = dict[thirdMultiple] else {return}
-        for j in secondMultipleIndexes.lazy.reversed() {
-            guard i < j else {break}
-            for k in thirdMultipleIndexes.lazy.reversed() {
-                guard j < k else {break}
-                triplets += 1
-            }
-        }
-    }
-    
-    return triplets
+    return count
 }
+
+countTriplets(arr: [1, 3, 9, 9, 27, 81], r: 3)
 
 //countTriplets(arr: [1, 3, 9, 9, 27, 81], r: 3)
 //countTriplets(arr: [1, 5, 5, 25, 125], r: 5)
