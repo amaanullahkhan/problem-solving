@@ -15,36 +15,36 @@ class TreeNode {
     }
 }
 
-func inorderTraversal(node: TreeNode?) {
-    var head = node
+func inorderTraversal(_ root: TreeNode?) -> [Int] {
+    var list: [Int] = []
     var stack: [TreeNode] = []
-    var inorder: [Int] = []
+    var head = root
     while head != nil || !stack.isEmpty {
-        while head != nil  {
+        while head != nil {
             stack.append(head!)
-            head = head!.left
+            head = head?.left
         }
         head = stack.removeLast()
-        inorder.append(head!.val)
-        head = head!.right
+        list.append(head!.val)
+        head = head?.right
     }
-    print(inorder)
+    return list
 }
 
-func outOrderTraversal(node: TreeNode?) {
-    var head = node
+func outOrderTraversal(_ root: TreeNode?) -> [Int] {
+    var list: [Int] = []
     var stack: [TreeNode] = []
-    var inorder: [Int] = []
+    var head = root
     while head != nil || !stack.isEmpty {
-        while head != nil  {
+        while head != nil {
             stack.append(head!)
-            head = head!.right
+            head = head?.right
         }
         head = stack.removeLast()
-        inorder.append(head!.val)
-        head = head!.left
+        list.append(head!.val)
+        head = head?.left
     }
-    print(inorder)
+    return list
 }
 
 func isValidBST(_ root: TreeNode?) -> Bool {
@@ -66,9 +66,55 @@ func isValidBST(_ root: TreeNode?) -> Bool {
     return true
 }
 
-let node1 = TreeNode(val: 2, left: TreeNode(val: 1), right: TreeNode(val: 3))
-inorderTraversal(node: node1)
-outOrderTraversal(node: node1)
+func isSymmetric(_ root: TreeNode?) -> Bool {
+    isMirror(root?.left, root?.right)
+}
 
-//let node1 = TreeNode(val: 1, left: TreeNode(val: 2, left: TreeNode(val: 3), right: TreeNode(val: 4)), right: TreeNode(val: 2, left: TreeNode(val: 4), right: TreeNode(val: 3)))
-//inorderTraversal(node: node1)
+func isMirror(_ t1: TreeNode?, _ t2: TreeNode?) -> Bool {
+    if t1 == nil && t2 == nil {return true}
+    if t1 == nil || t2 == nil {return false}
+    return t1!.val == t2!.val
+        && isMirror(t1!.left, t2!.right)
+        && isMirror(t1!.right, t2!.left)
+}
+
+
+class Solution {
+    
+    func sortedArrayToBST(_ nums: [Int]) -> TreeNode? {
+        
+        func sortedArrayToBST(_ low: Int, _ high: Int) -> TreeNode? {
+            if low > high { return nil }
+            let mid = (high + low) / 2
+            let node = TreeNode(val: nums[mid])
+            node.left = sortedArrayToBST(low, mid-1)
+            node.right = sortedArrayToBST(mid+1, high)
+            return node
+        }
+        
+        return sortedArrayToBST(0, nums.count-1)
+    }
+    
+}
+
+
+
+// In Order
+let node1 = TreeNode(val: 2, left: TreeNode(val: 1), right: TreeNode(val: 3))
+inorderTraversal(node1)
+
+
+// Out Order
+outOrderTraversal(node1)
+
+
+// Symmetric
+let symmetricTree = TreeNode(val: 1, left: TreeNode(val: 2, left: TreeNode(val: 3), right: TreeNode(val: 4)), right: TreeNode(val: 2, left: TreeNode(val: 4), right: TreeNode(val: 3)))
+inorderTraversal(symmetricTree)
+outOrderTraversal(symmetricTree)
+isSymmetric(symmetricTree)
+
+
+// Sorted array to Binary Search Tree
+let bst = Solution().sortedArrayToBST([-10,-3,0,5,9])
+inorderTraversal(bst)
