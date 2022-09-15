@@ -1,5 +1,63 @@
 import UIKit
 
+
+/*
+ Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++'s atoi function).
+
+ The algorithm for myAtoi(string s) is as follows:
+
+ Read in and ignore any leading whitespace.
+ Check if the next character (if not already at the end of the string) is '-' or '+'. Read this character in if it is either. This determines if the final result is negative or positive respectively. Assume the result is positive if neither is present.
+ Read in next the characters until the next non-digit character or the end of the input is reached. The rest of the string is ignored.
+ Convert these digits into an integer (i.e. "123" -> 123, "0032" -> 32). If no digits were read, then the integer is 0. Change the sign as necessary (from step 2).
+ If the integer is out of the 32-bit signed integer range [-231, 231 - 1], then clamp the integer so that it remains in the range. Specifically, integers less than -231 should be clamped to -231, and integers greater than 231 - 1 should be clamped to 231 - 1.
+ Return the integer as the final result.
+ Note:
+
+ Only the space character ' ' is considered a whitespace character.
+ Do not ignore any characters other than the leading whitespace or the rest of the string after the digits.
+ 
+ */
+
+
+func myAtoi(_ s: String) -> Int {
+    
+    let numbers = "0123456789"
+    let characters = [Character](s)
+    
+    guard !characters.isEmpty else { return 0 }
+    
+    var index = 0
+    while index < characters.count && characters[index] == " " {
+        index += 1
+    }
+    
+    var isNegative = false
+    if index < characters.count && (characters[index] == "+" || characters[index] == "-") {
+        isNegative = characters[index] == "-"
+        index += 1
+    }
+    
+    var total: Double = 0
+    while index < characters.count, numbers.contains(characters[index]), let number = Int(String(characters[index])) {
+        total *= 10
+        total += Double(number)
+        index += 1
+    }
+    if isNegative && total > pow(2.0, 31.0) {
+        total = pow(2.0, 31.0)
+    } else if !isNegative && total > pow(2.0, 31.0)-1 {
+        total = pow(2.0, 31.0) - 1
+    }
+    return isNegative ? -Int(total) : Int(total)
+}
+
+myAtoi("5767")
+myAtoi("+5767")
+myAtoi("    -45677 afdadsfasdf")
+myAtoi("asdfsdaf adfs 123")
+myAtoi("-2000000000000000000000000")
+
 //Given an integer array nums, return true if there exists a triple of indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]. If no such indices exists, return false.
 //
 //
@@ -22,7 +80,7 @@ import UIKit
 
 class Solution {
     func increasingTriplet(_ nums: [Int]) -> Bool {
-
+        false
     }
 }
 
