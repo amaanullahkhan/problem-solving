@@ -1,5 +1,69 @@
 import UIKit
 
+public class ListNode {
+    public var val: Int
+    public var next: ListNode?
+    public init() { self.val = 0; self.next = nil; }
+    public init(_ val: Int) { self.val = val; self.next = nil; }
+    public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
+}
+
+//Given the head of a singly linked list, return true if it is a palindrome or false otherwise.
+//
+//Constraints:
+//
+//The number of nodes in the list is in the range [1, 105].
+//0 <= Node.val <= 9
+//
+//
+//Follow up: Could you do it in O(n) time and O(1) space?
+
+
+
+func isPalindrome(_ head: ListNode?) -> Bool {
+    
+    var previous: ListNode? = nil
+    var current = head
+    var fast = head
+    
+    // Reverse first half of the list
+    while fast?.next != nil {
+        
+        fast = fast?.next?.next // iterate by 2
+        
+        // reverse (iterate by 2 will result in reversing only first half of the list)
+        let next = current?.next
+        current?.next = previous
+        previous = current
+        current = next
+    }
+    
+    if fast != nil { // if nodes' count is odd
+        current = current?.next // ignore middle one
+    }
+    
+    // check if reversed first half and second half have same values
+    var reversed = previous
+    while current != nil && reversed != nil {
+        guard current?.val == reversed?.val else { return false}
+        current = current?.next
+        reversed = reversed?.next
+    }
+    return true
+}
+
+var head: ListNode? = ListNode(1, ListNode(2, ListNode(2, ListNode(1))))
+isPalindrome(head)
+
+//var head: ListNode? = ListNode(1, ListNode(2, ListNode(3, ListNode(4, ListNode(5)))))
+//head = isPalindrome(head)
+//
+//while head != nil {
+//    print(head?.val)
+//    head = head?.next
+//}
+
+
 /*
 Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect. If the two linked lists have no intersection at all, return null.
 
@@ -151,15 +215,6 @@ func oddEvenList(_ head: ListNode?) -> ListNode? {
 //
 //Input: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
 //Output: [8,9,9,9,0,0,0,1]
-
-
-public class ListNode {
-    public var val: Int
-    public var next: ListNode?
-    public init() { self.val = 0; self.next = nil; }
-    public init(_ val: Int) { self.val = val; self.next = nil; }
-    public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
-}
  
 func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
     
@@ -192,7 +247,5 @@ func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
 var l1 = ListNode(2, ListNode(4, ListNode(3)))
 var l2 = ListNode(5, ListNode(6, ListNode(4)))
 addTwoNumbers(l1, l2)
-
-
 
 
