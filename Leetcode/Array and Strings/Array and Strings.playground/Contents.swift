@@ -1,6 +1,37 @@
 import UIKit
 
 /*
+ You are given an integer array prices where prices[i] is the price of a given stock on the ith day.
+
+ On each day, you may decide to buy and/or sell the stock. You can only hold at most one share of the stock at any time. However, you can buy it then immediately sell it on the same day.
+
+ Find and return the maximum profit you can achieve.
+ */
+
+func maxProfit(_ prices: [Int]) -> Int {
+        var maxProfit = 0
+        var currentProfit = 0
+        var boughtIndex = 0
+        for currentIndex in 1..<prices.count {
+            let profit = prices[currentIndex] - prices[boughtIndex]
+            if profit < currentProfit {
+                maxProfit += currentProfit
+                currentProfit = 0
+                boughtIndex = currentIndex
+            } else {
+                currentProfit = profit
+            }
+        }
+        if currentProfit > 0 {
+            maxProfit += currentProfit
+        }
+        return maxProfit
+}
+maxProfit([7,1,5,3,6,4])
+maxProfit([1,2,3,4,5])
+maxProfit([7,6,4,3,1])
+
+/*
  Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in nums.
 
  Consider the number of unique elements of nums to be k, to get accepted, you need to do the following things:
