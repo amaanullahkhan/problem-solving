@@ -1,5 +1,32 @@
 import UIKit
 
+/*
+ Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in nums.
+
+ Consider the number of unique elements of nums to be k, to get accepted, you need to do the following things:
+
+ Change the array nums such that the first k elements of nums contain the unique elements in the order they were present in nums initially. The remaining elements of nums are not important as well as the size of nums.
+ Return k.
+ */
+
+func removeDuplicates(_ nums: inout [Int]) -> Int {
+    var uniqueIndex = 0
+    for i in 1..<nums.count {
+        if nums[uniqueIndex] == nums[i] {
+            continue
+        }
+        else {
+            uniqueIndex += 1
+            nums[uniqueIndex] = nums[i]
+        }
+    }
+    var uniqueLength = uniqueIndex+1
+    return uniqueLength
+}
+
+var array = [0,0,1,1,1,2,2,3,3,4]
+removeDuplicates(&array)
+array
 
 /*
  Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++'s atoi function).

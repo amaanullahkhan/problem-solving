@@ -1,19 +1,15 @@
 import UIKit
 
-
 func pairs(k: Int, arr: [Int]) -> Int {
-    
+    var pairs: Set<Int> = Set()
     var count = 0
-    let arrSorted = arr.sorted()
-    var pairs: [Int: Int] = [:]
-    for num in arrSorted {
-        if pairs[num-k] != nil {
+    for num in arr.sorted() {
+        if pairs.contains(num-k) {
             count += 1
         }
-        pairs[num] = num
+        pairs.insert(num)
     }
     return count
 }
 
-pairs(k: 1, arr: [1, 2, 3, 4])
-pairs(k: 2, arr: [1, 5, 3, 4, 2])
+pairs(k: 2, arr: [1,5,3,4,2])
