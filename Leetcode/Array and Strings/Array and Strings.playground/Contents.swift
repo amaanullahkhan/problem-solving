@@ -1,5 +1,26 @@
 import UIKit
 
+func simulation(_ simulation: String) -> Int {
+    var (total, available) = (0,0)
+    for action in simulation {
+        switch action {
+        case "C" where available == 0, "U" where available == 0:
+            total += 1
+        case "C" where available > 0, "U" where available > 0:
+            available -= 1
+        case "R", "L":
+            available += 1
+        default: break
+        }
+    }
+    return total
+}
+func minChairs(simulations: [String]) -> [Int] {
+    var totalChairs: [Int] = simulations.map { simulation($0) }
+    return totalChairs
+}
+
+minChairs(simulations: ["CRCRCRUUCURUCRUCLCR"])
 
 /*
  Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.
